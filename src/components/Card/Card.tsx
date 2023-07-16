@@ -30,11 +30,11 @@ const Image = styled.img`
 `;
 
 const Title = styled.h1`
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 12px;
+  margin-bottom: 20px;
   text-align: center;
   @media (min-width: 576px) {
-    font-size: 13px;
+    font-size: 15px;
   }
 `;
 

@@ -15,7 +15,7 @@ const TextButton = styled.button`
 const ContainedButton = styled.button`
   background: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.white};
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-weight: 700;
   padding: 1rem;
   border-radius: 1rem;
@@ -23,6 +23,11 @@ const ContainedButton = styled.button`
   width: 100%;
   text-transform: uppercase;
   border: none;
+  display: flex;
+  justify-content: center;
+  @media (min-width: 576px){
+    font-size: 1.6rem;
+  }
 `;
 
 interface IProps {
@@ -30,7 +35,7 @@ interface IProps {
   variant: string;
 }
 
-const Button = ({ children, variant, ...rest }: IProps) => {
+const Button: React.FC<IProps> = ({ children, variant, ...rest }: IProps) => {
   if (variant === "contained") {
     return (
       <ContainedButton {...rest} data-testid="contained-button">

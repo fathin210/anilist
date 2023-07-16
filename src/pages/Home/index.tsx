@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Card, Grid, Pagination } from "../../components";
+import { Button, Card, Dashed, Grid, Loader, Pagination } from "../../components";
 import { fetchAnimeList } from "../../services/anime";
 
 const Home: React.FC = () => {
@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   const handlePrevPage = () => setPage((prevPage) => prevPage - 1);
 
   if (loading) {
-    return <div>Loading....</div>;
+    return <Loader size="large" />
   }
 
   if (error) {
@@ -19,11 +19,16 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <Grid>
+      <Grid
+        layout
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        transition={{ ease: "easeOut", duration: 2 }}>
         {data?.Page?.media?.map((item: any) => {
           return <Card key={item?.id} {...item} />;
         })}
       </Grid>
+      <Dashed />
       <Pagination
         total={100}
         currentPage={1}
