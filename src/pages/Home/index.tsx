@@ -1,13 +1,44 @@
 import { useState } from "react";
-import { Button, Card, Dashed, Grid, Loader, Pagination } from "../../components";
+import { Button, Card, Dashed, Grid, Loader, Modal, Pagination } from "../../components";
 import { fetchAnimeList } from "../../services/anime";
+import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
+import useModal from "../../customHooks/useModal";
+
+const FlexWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const Title = styled.p`
+  margin: 0;
+  font-weight: bold;
+  font-size: 14px;
+  @media (min-width: 576px){
+      font-size: 24px;
+  }
+`;
 
 const Home: React.FC = () => {
   const [page, setPage] = useState(1);
   const { data, loading, error } = fetchAnimeList(page);
+  const { isOpen, closeModal, openModal } = useModal()
 
-  const handleNextPage = () => setPage((prevPage) => prevPage + 1);
-  const handlePrevPage = () => setPage((prevPage) => prevPage - 1);
+  const handleNextPage = () => {
+    scrollTo(0,0)
+    setPage((prevPage) => prevPage + 1);
+  } 
+  const handlePrevPage = () => {
+    scrollTo(0,0)
+    setPage((prevPage) => prevPage - 1)
+  };
+
+  const navigate = useNavigate()
+
+  const handleNavigate = (id : string | number) => {
+    navigate(`/detail/${id}`)
+  } 
 
   if (loading) {
     return <Loader size="large" />
@@ -18,29 +49,35 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div>
+    <>
+      <FlexWrapper>
+        <Title>Here's are some anime list</Title>
+        <FlexWrapper>
+          <Button color="secondary" variant="text" onClick={openModal}>Add Bulk to Collection</Button>
+        </FlexWrapper>
+      </FlexWrapper>
       <Grid
         layout
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
         transition={{ ease: "easeOut", duration: 2 }}>
         {data?.Page?.media?.map((item: any) => {
-          return <Card key={item?.id} {...item} />;
+          return <Card key={item.id} handleClick={() => handleNavigate(item?.id)} {...item} />;
         })}
       </Grid>
       <Dashed />
       <Pagination
         total={100}
-        currentPage={1}
+        currentPage={page}
         hasNextPage={true}
-        lastPage={10}
+        lastPage={data?.Page?.pageInfo?.lastPage}
+        handleNextPage={handleNextPage}
+        handlePrevPage={handlePrevPage}
       />
-      <div>
-        <Button variant="">Test</Button>
-        <button onClick={handlePrevPage}>Prev Page</button>
-        <button onClick={handleNextPage}>Next Page</button>
-      </div>
-    </div>
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <h1>Test</h1>
+      </Modal>
+    </>
   );
 };
 

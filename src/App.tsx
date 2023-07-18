@@ -6,6 +6,7 @@ import theme from "./theme";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Detail, Home } from "./pages";
 import Root from "./routes/Root";
+import CollectionProvider from "./provider/context";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
+        <CollectionProvider>
+          <RouterProvider router={router} />
+        </CollectionProvider>
       </ThemeProvider>
     </ApolloProvider>
   );
