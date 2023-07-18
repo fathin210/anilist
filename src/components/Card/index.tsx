@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 
 const Wrapper = styled(motion.div)`
   position: relative;
@@ -39,12 +40,13 @@ const Title = styled.h1`
 `;
 
 const Card: React.FC = (props: any) => {
+  // const navigate = useNavigate()
   return (
-    <Wrapper whileHover={{ scale: 1.05 }}>
-      <TextWrapper>
-        <Title>{props?.title?.userPreferred}</Title>
-      </TextWrapper>
-      <Image src={props?.coverImage?.large} />
+    <Wrapper layout whileHover={{ scale: 1.05 }} onClick={props?.handleClick}>
+        <TextWrapper>
+          <Title>{props?.title?.userPreferred}</Title>
+        </TextWrapper>
+        <Image src={props?.coverImage?.large} />
     </Wrapper>
   );
 };

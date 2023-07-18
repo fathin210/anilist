@@ -1,15 +1,17 @@
 import styled from "@emotion/styled";
 import { CgMenuGridO } from "react-icons/cg"
 import { Button } from "..";
+import { Link } from "react-router-dom";
 
 
 const NavWrapper = styled.nav`
     display: flex;
     justify-content: space-between;
-    padding: 2rem;
+    margin-bottom: 2rem;
 `
 
 const Title = styled.p`
+  color: white;
   margin: 0;
   font-weight: bold;
   font-size: 36px;
@@ -30,11 +32,13 @@ const MenuWrapper = styled.div`
 
 const Navbar = () => {
     return <NavWrapper>
-        <Title>Ani
-            <AccentTitle>
-                List
-            </AccentTitle>
-        </Title>
+        <Link to="/">
+            <Title>Ani
+                <AccentTitle>
+                    List
+                </AccentTitle>
+            </Title>
+        </Link>
         <MenuWrapper>
             <Button variant="contained">
                 <CgMenuGridO />

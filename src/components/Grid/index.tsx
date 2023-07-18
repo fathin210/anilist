@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 const StyledGrid = styled(motion.div)`
   display: grid;
   grid-template-columns: auto auto;
-  padding: 1.5rem;
   gap: 1rem;
+  margin: 10px 0 10px 0;
   @media (min-width: 576px) {
     grid-template-columns: auto auto auto;
   }
