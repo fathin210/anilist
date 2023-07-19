@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Button, Card, Dashed, Grid, Loader, Modal, Pagination } from "../../components";
+import { Card, Dashed, Grid, Loader, Pagination } from "../../components";
 import { fetchAnimeList } from "../../services/anime";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import useModal from "../../customHooks/useModal";
 
 const HomeWrapper = styled.div`
   width: 100%;
@@ -29,7 +28,6 @@ const Title = styled.p`
 const Home: React.FC = () => {
   const [page, setPage] = useState(1);
   const { data, loading, error } = fetchAnimeList(page);
-  const { isOpen, closeModal, openModal } = useModal()
 
   const handleNextPage = () => {
     scrollTo(0, 0)
@@ -84,9 +82,6 @@ const Home: React.FC = () => {
         handlePrevPage={handlePrevPage}
         handleSelectedPage={handleSelectedPage}
       />
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <h1>Test</h1>
-      </Modal>
     </HomeWrapper>
   );
 };

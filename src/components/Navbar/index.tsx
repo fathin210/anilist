@@ -36,7 +36,7 @@ const MenuWrapper = styled.div`
   align-items: center;
 `
 
-const Navbar: React.FC<NavbarProps> = ({ toggleDrawer, ...props }) => {
+const Navbar: React.FC<NavbarProps> = ({ toggleDrawer }) => {
     return <NavWrapper>
         <Link to="/">
             <Title>Ani
