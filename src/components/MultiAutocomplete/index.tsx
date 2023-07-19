@@ -1,33 +1,50 @@
-import React, { useContext, useState } from "react"
-import { CollectionContextType } from "../../provider/type"
+import React, { useContext, useEffect, useRef, useState } from "react"
+import { CollectionContextType, ICollection } from "../../provider/type"
 import { CollectionContext } from "../../provider/context"
 import styled from '@emotion/styled';
 import { IoMdCloseCircle } from "react-icons/io"
+import { Media } from "../../interfaces";
+
+const MultiAutocompleteWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 10px
+`
 
 const SelectedChip = styled.div`
   display: flex;
   align-items: center;
   padding: 5px;
-  font-size: 8px;
+  font-size: 12px;
   background: ${(props) => props.theme.colors.accent};
   border-radius: 10px;
 `
 
-const MultiAutocomplete = () => {
-  const { collection } = useContext(CollectionContext) as CollectionContextType
-  const [selectedValue, setSelectedValue] = useState<string[]>([])
-  console.log("🚀 ~ file: index.tsx:9 ~ MultiAutocomplete ~ selectedValue:", selectedValue)
+const SelectInput = styled.select`
+  width: 100%;
+  padding: .5rem;
+`
 
-  const handleSelect = (e: React.FormEvent<HTMLSelectElement>) => setSelectedValue([...selectedValue, e.currentTarget.value])
+const MultiAutocomplete = (props: any) => {
+  const { existingCollection, handleAddToExisting, handleRemove, collectionsWithAnime } = props
+  const { collection } = useContext(CollectionContext) as CollectionContextType
+
+  const filteredOptions = collection.filter((item) =>
+    !existingCollection.includes(item.collection_name) &&
+    collectionsWithAnime?.every((_: Media) => _.id !== item.id)
+  );
+
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", width: "100%" }}>
-      {selectedValue.map((item) => <SelectedChip>{item} <IoMdCloseCircle /></SelectedChip>)}
-      <select name="select_data" id="select_data" onChange={handleSelect}>
-        {collection.map((item) => {
-          return <option value={item.collection_name}>{item.collection_name}</option>
+    <MultiAutocompleteWrapper>
+      {existingCollection.map((item: ICollection, index: number) => <SelectedChip key={index} onClick={() => handleRemove(item)}>{item.collection_name} <IoMdCloseCircle /></SelectedChip>)}
+      <SelectInput name="select_data" id="select_data" value="default" defaultValue="default" onChange={handleAddToExisting}>
+        <option value="default" disabled>Select an option</option>
+        {filteredOptions.map((item) => {
+          return <option key={item.id} value={item.collection_name}>{item.collection_name}</option>
         })}
-      </select>
-    </div>
+      </SelectInput>
+    </MultiAutocompleteWrapper>
   )
 }
 

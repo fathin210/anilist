@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "..";
 import useModal from "../../customHooks/useModal";
 
@@ -10,6 +10,7 @@ interface PaginationProps {
   hasNextPage?: boolean;
   handleNextPage: () => void;
   handlePrevPage: () => void;
+  handleSelectedPage: (page: number) => void;
 }
 
 const PaginationWrapper = styled.div`
@@ -24,6 +25,23 @@ const ButtonWrapper = styled.div`
   gap: 10px;
 `
 
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+const ModalLabel = styled.span`
+    font-weight: bold;
+    margin-right: 8px;
+    font-size: 13px;
+    flex: 1;
+`;
+
+const InputPage = styled.input`
+  padding: 8px;
+`
+
 const Pagination: React.FC<PaginationProps> = ({
   total,
   currentPage,
@@ -32,9 +50,17 @@ const Pagination: React.FC<PaginationProps> = ({
   ...props
 }) => {
   const { isOpen, closeModal, openModal } = useModal()
+  const [page, setPage] = useState<number>(currentPage!)
   const handlePreviousPage = () => props.handlePrevPage();
 
   const handleNextPage = () => props.handleNextPage();
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => setPage(Number(event.currentTarget.value))
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    props.handleSelectedPage(page)
+  }
 
   return (
     <PaginationWrapper>
@@ -50,7 +76,13 @@ const Pagination: React.FC<PaginationProps> = ({
         </Button>
       </ButtonWrapper>
       <Modal isOpen={isOpen} onClose={closeModal}>
-        
+        <form onSubmit={handleSubmit}>
+          <ModalWrapper>
+            <ModalLabel>Where page do you want to go?</ModalLabel>
+            <InputPage type="number" pattern="/^[0-9]+$/" name="page" onChange={handleChange} />
+            <Button>Go</Button>
+          </ModalWrapper>
+        </form>
       </Modal>
     </PaginationWrapper>
   );

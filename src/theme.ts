@@ -4,6 +4,7 @@ const theme: Theme = {
   colors: {
     primary: "#1fa58d",
     secondary: "#70a51f",
+    danger: "red",
     accent: "#fea009",
     text: "#2b2d42",
     white: "#fff",

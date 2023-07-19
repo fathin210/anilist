@@ -6,5 +6,7 @@ import Dashed from "./Dashed";
 import Loader from "./Loader";
 import Modal from "./Modal";
 import MultiAutocomplete from "./MultiAutocomplete";
+import Navbar from "./Navbar";
+import Drawer from "./Drawer";
 
-export { Card, Grid, Pagination, Button, Dashed, Loader, Modal, MultiAutocomplete };
+export { Card, Grid, Pagination, Button, Dashed, Loader, Modal, MultiAutocomplete, Navbar, Drawer };

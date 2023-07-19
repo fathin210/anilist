@@ -22,6 +22,8 @@ export interface Media {
     }
     season?: string
     seasonYear?: number | string
+    type: string
+    source: string
 }
 
 export interface Page {

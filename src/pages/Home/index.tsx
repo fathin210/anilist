@@ -5,6 +5,12 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import useModal from "../../customHooks/useModal";
 
+const HomeWrapper = styled.div`
+  width: 100%;
+  max-width: 1024px;
+  margin: auto;
+`
+
 const FlexWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -26,19 +32,25 @@ const Home: React.FC = () => {
   const { isOpen, closeModal, openModal } = useModal()
 
   const handleNextPage = () => {
-    scrollTo(0,0)
+    scrollTo(0, 0)
     setPage((prevPage) => prevPage + 1);
-  } 
+  }
+
   const handlePrevPage = () => {
-    scrollTo(0,0)
+    scrollTo(0, 0)
     setPage((prevPage) => prevPage - 1)
   };
 
+  const handleSelectedPage = (selectedPage: number) => {
+    scrollTo(0, 0)
+    setPage(selectedPage)
+  }
+
   const navigate = useNavigate()
 
-  const handleNavigate = (id : string | number) => {
+  const handleNavigate = (id: string | number) => {
     navigate(`/detail/${id}`)
-  } 
+  }
 
   if (loading) {
     return <Loader size="large" />
@@ -49,12 +61,9 @@ const Home: React.FC = () => {
   }
 
   return (
-    <>
+    <HomeWrapper>
       <FlexWrapper>
         <Title>Here's are some anime list</Title>
-        <FlexWrapper>
-          <Button color="secondary" variant="text" onClick={openModal}>Add Bulk to Collection</Button>
-        </FlexWrapper>
       </FlexWrapper>
       <Grid
         layout
@@ -73,11 +82,12 @@ const Home: React.FC = () => {
         lastPage={data?.Page?.pageInfo?.lastPage}
         handleNextPage={handleNextPage}
         handlePrevPage={handlePrevPage}
+        handleSelectedPage={handleSelectedPage}
       />
       <Modal isOpen={isOpen} onClose={closeModal}>
         <h1>Test</h1>
       </Modal>
-    </>
+    </HomeWrapper>
   );
 };
 

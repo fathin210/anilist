@@ -3,11 +3,17 @@ import { CgMenuGridO } from "react-icons/cg"
 import { Button } from "..";
 import { Link } from "react-router-dom";
 
+interface NavbarProps {
+    toggleDrawer: () => void
+}
 
 const NavWrapper = styled.nav`
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
+    max-width: 1024px;
+    margin: auto;
+    width: 100%;
 `
 
 const Title = styled.p`
@@ -30,7 +36,7 @@ const MenuWrapper = styled.div`
   align-items: center;
 `
 
-const Navbar = () => {
+const Navbar: React.FC<NavbarProps> = ({ toggleDrawer, ...props }) => {
     return <NavWrapper>
         <Link to="/">
             <Title>Ani
@@ -40,7 +46,7 @@ const Navbar = () => {
             </Title>
         </Link>
         <MenuWrapper>
-            <Button variant="contained">
+            <Button onClick={toggleDrawer} variant="contained">
                 <CgMenuGridO />
             </Button>
         </MenuWrapper>

@@ -63,6 +63,8 @@ export const GET_ANIME_BY_ID = gql`
       description
       season
       seasonYear
+      type
+    	source
     }
   }
 `

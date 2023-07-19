@@ -4,7 +4,7 @@ import { ApolloProvider } from "@apollo/client/react";
 import client from "./graphql/client";
 import theme from "./theme";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Detail, Home } from "./pages";
+import { CollectionDetail, CollectionList, Detail, Home } from "./pages";
 import Root from "./routes/Root";
 import CollectionProvider from "./provider/context";
 
@@ -20,7 +20,15 @@ const router = createBrowserRouter([
       {
         path: "detail/:detailId",
         element: <Detail />
-      }
+      },
+      {
+        path: "collection-list",
+        element: <CollectionList />
+      },
+      {
+        path: "collection/:collectionId",
+        element: <CollectionDetail />
+      },
     ]
   },
 ])
