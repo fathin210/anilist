@@ -140,6 +140,13 @@ const Input = styled.input`
   margin-bottom: 10px;
 `
 
+const CoverTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
 const initialState = {
     collection_name: ""
 }
@@ -234,10 +241,10 @@ const Detail: React.FC = () => {
     return (
         <DetailWrapper>
             <AnimeDetailWrapper>
-                <div>
+                <CoverTitleWrapper>
                     <CoverImage src={data?.Media?.coverImage?.large} />
                     <Title>{data?.Media?.title?.userPreferred}</Title>
-                </div>
+                </CoverTitleWrapper>
                 <DetailContainer>
                     <GenresWrapper>
                         {data?.Media?.genres?.map((item, index) => <GenresChip key={index} children={item} />)}
