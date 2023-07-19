@@ -84,7 +84,7 @@ const Card: React.FC<CardProps> = ({ handleDelete, handleClick, deleteAction, ed
       <TextWrapper onClick={handleClick}>
         <CardTitle>{props?.title?.userPreferred}</CardTitle>
       </TextWrapper>
-      <Image src={props?.coverImage?.large || props?.coverImage?.medium} />
+      <Image src={props?.coverImage?.medium} />
     </Wrapper>
   );
 };
