@@ -210,7 +210,7 @@ const CollectionList: React.FC = () => {
                 })}
             </Grid>
             {isOpen ? (
-                <Modal isOpen={isOpen} onClose={closeModal}>
+                <Modal isOpen={isOpen} onClose={handleCloseModal}>
                     {isEdit ? (
                         <form onSubmit={handleSubmitEdit}>
                             <ModalWrapper>
