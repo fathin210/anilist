@@ -15,6 +15,7 @@ interface CardProps {
   handleDelete?: () => void;
   editAction?: boolean;
   handleEdit?: () => void;
+  animateHover?: boolean;
 }
 
 const Wrapper = styled(motion.div)`
@@ -70,9 +71,9 @@ const CardTitle = styled.h1`
   }
 `;
 
-const Card: React.FC<CardProps> = ({ handleDelete, handleClick, deleteAction, editAction, handleEdit, ...props }) => {
+const Card: React.FC<CardProps> = ({animateHover = true, handleDelete, handleClick, deleteAction, editAction, handleEdit, ...props }) => {
   return (
-    <Wrapper layout whileHover={{ scale: 1.05 }}>
+    <Wrapper layout whileHover={ animateHover ? { scale: 1.05 } : {}}>
       <ButtonWrapper>
         {deleteAction ? (
           <Button color="danger" onClick={handleDelete}><FaTrash /></Button>

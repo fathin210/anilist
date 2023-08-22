@@ -197,7 +197,7 @@ const CollectionList: React.FC = () => {
                     return <CardWrapper key={item.id}>
                         {item.collection_name}
                         {item.anime_list?.length! > 0 ? (
-                            <Card key={item.id} deleteAction editAction handleDelete={() => handleDeleteModal(item)} handleEdit={() => handleOpenEditModal(item)} handleClick={() => handleNavigate(item.id)} {...item.anime_list?.[0]} />
+                            <Card key={item.id} animateHover={false} deleteAction editAction handleDelete={() => handleDeleteModal(item)} handleEdit={() => handleOpenEditModal(item)} handleClick={() => handleNavigate(item.id)} {...item.anime_list?.[0]} />
                         ) : (
                             <RelativeWrapper>
                                 <ActionButtonWrapper>

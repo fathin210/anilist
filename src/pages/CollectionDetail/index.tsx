@@ -154,7 +154,7 @@ const CollectionDetail: React.FC = () => {
             transition={{ ease: "easeOut", duration: 2 }}>
             {detailCollection.anime_list
                 ?.map((item: any) => {
-                    return <Card key={item.id} deleteAction handleDelete={() => handleOpenDeleteModal(item)} handleClick={() => handleNavigate(item?.id)} {...item} />;
+                    return <Card key={item.id} animateHover={false} deleteAction handleDelete={() => handleOpenDeleteModal(item)} handleClick={() => handleNavigate(item?.id)} {...item} />;
                 })}
         </Grid>
         {isOpen ? (
