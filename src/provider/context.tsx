@@ -54,7 +54,6 @@ const CollectionProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const deleteAnimeFromExistingCollection = (nameCollection: string, animeId: number) => {
         const updatedCollection = collection.map((item) => {
             if (nameCollection.includes(item.collection_name)) {
-                console.log("masuk sini")
                 return {
                     ...item,
                     anime_list: item.anime_list?.filter((item) => item.id !== animeId)

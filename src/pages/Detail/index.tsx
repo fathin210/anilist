@@ -157,10 +157,8 @@ const Detail: React.FC = () => {
     const { isOpen, closeModal, openModal } = useModal()
     const [form, setForm] = useState(initialState)
     const [collectionsWithAnime, setCollectionsWithAnime] = useState<ICollection[]>([])
-    console.log("🚀 ~ file: index.tsx:153 ~ collectionsWithAnime:", collectionsWithAnime)
 
     const { collection, saveCollection, saveToExistingCollection, forceUpdateCollection } = useContext(CollectionContext) as CollectionContextType
-    console.log("🚀 ~ file: index.tsx:156 ~ collection:", collection)
     const [isError, setIsError] = useState<boolean>(false)
     const [existingCollection, setExistingCollection] = useState<ICollection[]>([])
     const navigation = useNavigate()
@@ -172,7 +170,6 @@ const Detail: React.FC = () => {
     useEffect(() => {
         setCollectionsWithAnime(collection.filter((collectionItem) => collectionItem.anime_list?.some((anime) => anime.id === data?.Media?.id)))
     }, [data, collection])
-
 
     useEffect(() => {
         if (!isOpen) {
