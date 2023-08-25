@@ -85,7 +85,7 @@ const Card: React.FC<CardProps> = ({animateHover = true, handleDelete, handleCli
       <TextWrapper onClick={handleClick}>
         <CardTitle>{props?.title?.userPreferred}</CardTitle>
       </TextWrapper>
-      <Image src={props?.coverImage?.medium} />
+      <Image rel="preload" src={props?.coverImage?.medium} />
     </Wrapper>
   );
 };

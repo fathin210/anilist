@@ -37,7 +37,7 @@ const MultiAutocomplete = (props: any) => {
 
   return (
     <MultiAutocompleteWrapper>
-      {existingCollection.map((item: ICollection, index: number) => <SelectedChip key={index} onClick={() => handleRemove(item)}>{item.collection_name} <IoMdCloseCircle /></SelectedChip>)}
+      {existingCollection.map((item: ICollection, index: number) => <SelectedChip key={index} onClick={() => handleRemove(item.collection_name)}>{item.collection_name} <IoMdCloseCircle /></SelectedChip>)}
       <SelectInput name="select_data" id="select_data" value="default" defaultValue="default" onChange={handleAddToExisting}>
         <option value="default" disabled>Select an option</option>
         {filteredOptions.map((item) => {
