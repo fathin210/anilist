@@ -31,7 +31,7 @@ const MultiAutocomplete = (props: any) => {
   const { collection } = useContext(CollectionContext) as CollectionContextType
 
   const filteredOptions = collection.filter((item) =>
-    !existingCollection.includes(item.collection_name) &&
+    !existingCollection.some((data : ICollection) => data.collection_name === item.collection_name) &&
     collectionsWithAnime?.every((_: Media) => _.id !== item.id)
   );
 
