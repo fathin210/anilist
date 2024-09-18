@@ -59,11 +59,6 @@ const ButtonWrapper = styled.div`
   gap: 10px;
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
 const CardTitle = styled.h1`
   font-size: 12px;
   margin-bottom: 20px;

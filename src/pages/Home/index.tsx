@@ -3,7 +3,6 @@ import { Card, Dashed, Grid, Loader, Pagination } from "../../components";
 import { fetchAnimeList } from "../../services/anime";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { Media } from "../../interfaces";
 
 const HomeWrapper = styled.div`
   width: 100%;

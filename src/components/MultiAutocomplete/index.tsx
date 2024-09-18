@@ -3,7 +3,6 @@ import { CollectionContextType, ICollection } from "../../provider/type"
 import { CollectionContext } from "../../provider/context"
 import styled from '@emotion/styled';
 import { IoMdCloseCircle } from "react-icons/io"
-import { Media } from "../../interfaces";
 
 const MultiAutocompleteWrapper = styled.div`
   display: flex;
@@ -29,7 +28,9 @@ const SelectInput = styled.select`
 interface MultiAutocompleteProps {
   existingCollection: ICollection[];
   collectionsWithAnime: ICollection[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleAddToExisting: (arg?: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleRemove: (arg?: any) => void;
 }
 
