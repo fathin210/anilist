@@ -5,7 +5,7 @@ import useModal from "../../customHooks/useModal";
 
 interface PaginationProps {
   total?: number;
-  currentPage?: number;
+  currentPage: number;
   lastPage?: number;
   hasNextPage?: boolean;
   handleNextPage: () => void;
@@ -50,7 +50,7 @@ const Pagination: React.FC<PaginationProps> = ({
   ...props
 }) => {
   const { isOpen, closeModal, openModal } = useModal()
-  const [page, setPage] = useState<number>(currentPage!)
+  const [page, setPage] = useState<number>(currentPage)
   const handlePreviousPage = () => props.handlePrevPage();
 
   const handleNextPage = () => props.handleNextPage();

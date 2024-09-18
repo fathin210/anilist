@@ -3,17 +3,14 @@ import { motion } from "framer-motion";
 
 const StyledGrid = styled(motion.div)`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 10px 0 10px 0;
   @media (min-width: 576px) {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(3, 1fr);
   }
   @media (min-width: 768px) {
-    grid-template-columns: auto auto auto auto auto;
-  }
-  @media (min-width: 1200px) {
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: repeat(5, 1fr);
   }
 `;
 

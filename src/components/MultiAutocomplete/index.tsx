@@ -26,13 +26,20 @@ const SelectInput = styled.select`
   padding: .5rem;
 `
 
-const MultiAutocomplete = (props: any) => {
+interface MultiAutocompleteProps {
+  existingCollection: ICollection[];
+  collectionsWithAnime: ICollection[];
+  handleAddToExisting: (arg?: any) => void;
+  handleRemove: (arg?: any) => void;
+}
+
+const MultiAutocomplete = (props: MultiAutocompleteProps) => {
   const { existingCollection, handleAddToExisting, handleRemove, collectionsWithAnime } = props
   const { collection } = useContext(CollectionContext) as CollectionContextType
 
   const filteredOptions = collection.filter((item) =>
-    !existingCollection.some((data : ICollection) => data.collection_name === item.collection_name) &&
-    collectionsWithAnime?.every((_: Media) => _.id !== item.id)
+    !existingCollection.some((data: ICollection) => data.collection_name === item.collection_name) &&
+    collectionsWithAnime.every((data: ICollection) => data.id !== item.id)
   );
 
   return (

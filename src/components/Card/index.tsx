@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
 import { FaTrash, FaEdit } from 'react-icons/fa'
 import { Button } from "..";
 import { Title } from "../../interfaces";
@@ -18,12 +17,15 @@ interface CardProps {
   animateHover?: boolean;
 }
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
   position: relative;
   overflow: hidden;
   border-radius: 10px;
   cursor: pointer;
+  min-height: 250px;
+  min-width: 150px;
   height: 100%;
+  width: 100%;
 `;
 
 const TextWrapper = styled.div`
@@ -71,9 +73,9 @@ const CardTitle = styled.h1`
   }
 `;
 
-const Card: React.FC<CardProps> = ({animateHover = true, handleDelete, handleClick, deleteAction, editAction, handleEdit, ...props }) => {
+const Card: React.FC<CardProps> = ({ handleDelete, handleClick, deleteAction, editAction, handleEdit, coverImage, ...props }) => {
   return (
-    <Wrapper layout whileHover={ animateHover ? { scale: 1.05 } : {}}>
+    <Wrapper style={{backgroundImage: `url(${coverImage!.medium ?? coverImage!.large})`, backgroundSize: "cover"}}>
       <ButtonWrapper>
         {deleteAction ? (
           <Button color="danger" onClick={handleDelete}><FaTrash /></Button>
@@ -85,7 +87,6 @@ const Card: React.FC<CardProps> = ({animateHover = true, handleDelete, handleCli
       <TextWrapper onClick={handleClick}>
         <CardTitle>{props?.title?.userPreferred}</CardTitle>
       </TextWrapper>
-      <Image rel="preload" src={props?.coverImage?.medium} />
     </Wrapper>
   );
 };
