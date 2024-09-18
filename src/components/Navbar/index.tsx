@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleDrawer }) => {
       </Title>
     </Link>
     <MenuWrapper>
-      <Button onClick={toggleDrawer} variant="contained">
+      <Button name="menu" aria-label="menu" onClick={toggleDrawer} variant="contained">
         <CgMenuGridO />
       </Button>
     </MenuWrapper>
