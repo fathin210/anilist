@@ -77,7 +77,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen = false, toggleDrawer }) => {
             <DrawerWrapper isOpen={isOpen}>
                 <FlexWrapper>
                     <ButtonWrapper>
-                        <Button color="danger" onClick={toggleDrawer}><IoMdClose /></Button>
+                        <Button name="close" aria-label='close' color="danger" onClick={toggleDrawer}><IoMdClose /></Button>
                     </ButtonWrapper>
                 </FlexWrapper>
                 <DrawerContent>
