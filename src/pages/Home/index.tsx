@@ -70,7 +70,6 @@ const Home: React.FC = () => {
       </Grid>
       <Dashed />
       <Pagination
-        total={100}
         currentPage={page}
         hasNextPage={true}
         lastPage={data?.Page?.pageInfo?.lastPage}
