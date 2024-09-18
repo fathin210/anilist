@@ -4,7 +4,6 @@ import { Button, Modal } from "..";
 import useModal from "../../customHooks/useModal";
 
 interface PaginationProps {
-  total?: number;
   currentPage: number;
   lastPage?: number;
   hasNextPage?: boolean;
@@ -43,7 +42,6 @@ const InputPage = styled.input`
 `
 
 const Pagination: React.FC<PaginationProps> = ({
-  total,
   currentPage,
   lastPage,
   hasNextPage,
@@ -68,10 +66,10 @@ const Pagination: React.FC<PaginationProps> = ({
         Page {currentPage} of {lastPage}
       </Button>
       <ButtonWrapper>
-        <Button variant="contained" onClick={handlePreviousPage} disabled={currentPage === 1}>
+        <Button variant="contained" color="#25DAB5" style={{color: "black"}} onClick={handlePreviousPage} disabled={currentPage === 1}>
           Previous
         </Button>
-        <Button variant="contained" onClick={handleNextPage} disabled={!hasNextPage}>
+        <Button variant="contained" color="#25DAB5" style={{color: "black"}} onClick={handleNextPage} disabled={!hasNextPage}>
           Next
         </Button>
       </ButtonWrapper>
