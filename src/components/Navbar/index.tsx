@@ -4,7 +4,7 @@ import { Button } from "..";
 import { Link } from "react-router-dom";
 
 interface NavbarProps {
-    toggleDrawer: () => void
+  toggleDrawer: () => void
 }
 
 const NavWrapper = styled.nav`
@@ -37,20 +37,20 @@ const MenuWrapper = styled.div`
 `
 
 const Navbar: React.FC<NavbarProps> = ({ toggleDrawer }) => {
-    return <NavWrapper>
-        <Link to="/">
-            <Title>Ani
-                <AccentTitle>
-                    List
-                </AccentTitle>
-            </Title>
-        </Link>
-        <MenuWrapper>
-            <Button onClick={toggleDrawer} variant="contained">
-                <CgMenuGridO />
-            </Button>
-        </MenuWrapper>
-    </NavWrapper>
+  return <NavWrapper>
+    <Link to="/">
+      <Title>Ani
+        <AccentTitle>
+          List
+        </AccentTitle>
+      </Title>
+    </Link>
+    <MenuWrapper>
+      <Button onClick={toggleDrawer} variant="contained">
+        <CgMenuGridO />
+      </Button>
+    </MenuWrapper>
+  </NavWrapper>
 }
 
 export default Navbar;

@@ -12,14 +12,14 @@ const CollectionProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     React.useEffect(() => {
         const storedCollectionData = localStorage.getItem(COLLECTION_STORAGE_KEY)
         if (storedCollectionData) {
-            setCollection(JSON.parse(storedCollectionData))
+            setCollection(JSON.parse(storedCollectionData) as ICollection[])
         }
     }, [])
 
     const forceUpdateCollection = () => {
         const storedCollectionData = localStorage.getItem(COLLECTION_STORAGE_KEY)
         if (storedCollectionData) {
-            setCollection(JSON.parse(storedCollectionData))
+            setCollection(JSON.parse(storedCollectionData) as ICollection[])
         }
     }
 

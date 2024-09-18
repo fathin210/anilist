@@ -116,14 +116,14 @@ const CollectionDetail: React.FC = () => {
                 ...detailCollection!,
                 collection_name: editForm
             })
-            editCollectionName(editForm, detailCollection?.id!)
+            editCollectionName(editForm, detailCollection!.id)
             handleCloseModal()
         }
     }
 
     useEffect(() => {
         forceUpdateCollection()
-    }, [])
+    }, [forceUpdateCollection])
 
     useEffect(() => {
         const tempDetail = collection.find((item) => String(item.id) === collectionId)
@@ -153,7 +153,7 @@ const CollectionDetail: React.FC = () => {
             initial={{ opacity: 0 }}
             transition={{ ease: "easeOut", duration: 2 }}>
             {detailCollection.anime_list
-                ?.map((item: any) => {
+                ?.map((item: Media) => {
                     return <Card key={item.id} animateHover={false} deleteAction handleDelete={() => handleOpenDeleteModal(item)} handleClick={() => handleNavigate(item?.id)} {...item} />;
                 })}
         </Grid>
@@ -173,7 +173,7 @@ const CollectionDetail: React.FC = () => {
                         <Subtitle>Delete anime {animeDeleteData?.title.userPreferred} ?</Subtitle>
                         <FlexWrapper>
                             <Button onClick={handleCloseModal} color="black">Cancel</Button>
-                            <Button color="danger" onClick={() => handleDeleteAnime(detailCollection.collection_name, animeDeleteData?.id!)}>Delete</Button>
+                            <Button color="danger" onClick={() => handleDeleteAnime(detailCollection.collection_name, animeDeleteData!.id)}>Delete</Button>
                         </FlexWrapper>
                     </ModalWrapper>
                 )}

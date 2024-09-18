@@ -77,11 +77,11 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen = false, toggleDrawer }) => {
             <DrawerWrapper isOpen={isOpen}>
                 <FlexWrapper>
                     <ButtonWrapper>
-                        <Button onClick={toggleDrawer}><IoMdClose /></Button>
+                        <Button color="danger" onClick={toggleDrawer}><IoMdClose /></Button>
                     </ButtonWrapper>
                 </FlexWrapper>
                 <DrawerContent>
-                    {routes.map((item) => <CustomLink onClick={toggleDrawer} to={item.path}>{item.title}</CustomLink>)}
+                    {routes.map((item) => <CustomLink key={item.path} onClick={toggleDrawer} to={item.path}>{item.title}</CustomLink>)}
                 </DrawerContent>
             </DrawerWrapper>
             <OutsideLayerWrapper isOpen={isOpen} onClick={toggleDrawer} />

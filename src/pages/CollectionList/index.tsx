@@ -87,161 +87,161 @@ const Title = styled.p`
 `;
 
 const CollectionList: React.FC = () => {
-    const { collection, deleteCollection, editCollectionName, forceUpdateCollection, saveCollection } = useContext(CollectionContext) as CollectionContextType
-    const navigate = useNavigate()
-    const { isOpen, closeModal, openModal } = useModal()
-    const [isCreate, setIsCreate] = useState<boolean>(false)
-    const [isEdit, setIsEdit] = useState<boolean>(false)
-    const [editForm, setEditForm] = useState<string>("")
-    const [editModalData, setEditModalData] = useState<ICollection>()
-    const [deleteModalData, setDeleteModalData] = useState<ICollection>()
-    const [tempCollection, setTempCollection] = useState<ICollection[]>([])
-    const [isError, setIsError] = useState<boolean>(false)
+  const { collection, deleteCollection, editCollectionName, forceUpdateCollection, saveCollection } = useContext(CollectionContext) as CollectionContextType
+  const navigate = useNavigate()
+  const { isOpen, closeModal, openModal } = useModal()
+  const [isCreate, setIsCreate] = useState<boolean>(false)
+  const [isEdit, setIsEdit] = useState<boolean>(false)
+  const [editForm, setEditForm] = useState<string>("")
+  const [editModalData, setEditModalData] = useState<ICollection>()
+  const [deleteModalData, setDeleteModalData] = useState<ICollection>()
+  const [tempCollection, setTempCollection] = useState<ICollection[]>([])
+  const [isError, setIsError] = useState<boolean>(false)
 
-    useEffect(() => {
-        forceUpdateCollection()
-    }, [])
+  useEffect(() => {
+    forceUpdateCollection()
+  }, [forceUpdateCollection])
 
-    useEffect(() => {
-        setTempCollection(collection)
-    }, [collection])
+  useEffect(() => {
+    setTempCollection(collection)
+  }, [collection])
 
-    const handleNavigate = (collectionId: number) => {
-        navigate(`/collection/${collectionId}`)
+  const handleNavigate = (collectionId: number) => {
+    navigate(`/collection/${collectionId}`)
+  }
+
+  const handleDeleteCollection = (collectionId: number) => {
+    deleteCollection(collectionId)
+    setTempCollection(tempCollection.filter((item) => item.id !== collectionId))
+    handleCloseModal()
+  }
+
+  const handleDeleteModal = (selectedCollection: ICollection) => {
+    setDeleteModalData(selectedCollection)
+    openModal()
+  }
+
+  const handleOpenCreateCollectionModal = () => {
+    setIsCreate(true)
+    openModal()
+  }
+
+  const handleSubmitCreate = (event: React.FormEvent) => {
+    event.preventDefault()
+    if (tempCollection.some((_) => _.collection_name === editForm)) {
+      setIsError(true)
+    } else {
+      const newObject: ICollection = {
+        id: Date.now(),
+        collection_name: editForm,
+        anime_list: []
+      }
+      setTempCollection([...tempCollection, newObject])
+      saveCollection(newObject)
+      handleCloseModal()
     }
+  }
 
-    const handleDeleteCollection = (collectionId: number) => {
-        deleteCollection(collectionId)
-        setTempCollection(tempCollection.filter((item) => item.id !== collectionId))
-        handleCloseModal()
-    }
+  const handleOpenEditModal = (editCollection: ICollection) => {
+    setIsEdit(true)
+    setIsError(false)
+    setEditForm(editCollection.collection_name)
+    setEditModalData(editCollection)
+    openModal()
+  }
 
-    const handleDeleteModal = (selectedCollection: ICollection) => {
-        setDeleteModalData(selectedCollection)
-        openModal()
-    }
+  const handleCloseModal = () => {
+    setIsEdit(false)
+    setIsCreate(false)
+    setEditForm("")
+    closeModal()
+  }
 
-    const handleOpenCreateCollectionModal = () => {
-        setIsCreate(true)
-        openModal()
-    }
+  const handleChangeEdit = (event: React.FormEvent<HTMLInputElement>) => {
+    setEditForm(event.currentTarget.value)
+    setIsError(false)
+  }
 
-    const handleSubmitCreate = (event: React.FormEvent) => {
-        event.preventDefault()
-        if (tempCollection.some((_) => _.collection_name === editForm)) {
-            setIsError(true)
-        } else {
-            const newObject: ICollection = {
-                id: Date.now(),
-                collection_name: editForm,
-                anime_list: []
-            }
-            setTempCollection([...tempCollection, newObject])
-            saveCollection(newObject)
-            handleCloseModal()
+  const handleSubmitEdit = (event: React.FormEvent) => {
+    event.preventDefault()
+    if (tempCollection.some((_) => _.collection_name === editForm)) {
+      setIsError(true)
+    } else {
+      setTempCollection(tempCollection.map((item) => {
+        if (item.id === editModalData?.id) {
+          return {
+            ...item,
+            collection_name: editForm
+          }
         }
+        return item;
+      }))
+      editCollectionName(editForm, editModalData!.id)
+      handleCloseModal()
     }
+  }
 
-    const handleOpenEditModal = (editCollection: ICollection) => {
-        setIsEdit(true)
-        setEditForm(editCollection.collection_name)
-        setEditModalData(editCollection)
-        openModal()
-    }
-
-    const handleCloseModal = () => {
-        setIsEdit(false)
-        setIsCreate(false)
-        setEditForm("")
-        closeModal()
-    }
-
-    const handleChangeEdit = (event: React.FormEvent<HTMLInputElement>) => {
-        setEditForm(event.currentTarget.value)
-        setIsError(false)
-    }
-
-    const handleSubmitEdit = (event: React.FormEvent) => {
-        event.preventDefault()
-        if (tempCollection.some((_) => _.collection_name === editForm)) {
-            setIsError(true)
-        } else {
-            setTempCollection(tempCollection.map((item) => {
-                if (item.id === editModalData?.id) {
-                    return {
-                        ...item!,
-                        collection_name: editForm
-                    }
-                }
-                return item;
-            }))
-            editCollectionName(editForm, editModalData?.id!)
-            handleCloseModal()
-        }
-    }
-
-    return (
-        <CollectionListWrapper>
-            <FlexWrapper>
-                <Title>Here's your collection</Title>
+  return (
+    <CollectionListWrapper>
+      <FlexWrapper>
+        <Title>Here's your collection</Title>
+        <FlexWrapper>
+          <Button color="secondary" variant="text" onClick={handleOpenCreateCollectionModal}>Add new collection</Button>
+        </FlexWrapper>
+      </FlexWrapper>
+      <Grid>
+        {tempCollection.map((item: ICollection) => {
+          return <CardWrapper key={item.id}>
+            {item.collection_name}
+            {item.anime_list!.length > 0 ? (
+              <Card key={item.id} animateHover={false} deleteAction editAction handleDelete={() => handleDeleteModal(item)} handleEdit={() => handleOpenEditModal(item)} handleClick={() => handleNavigate(item.id)} {...item.anime_list?.[0]} />
+            ) : (
+              <RelativeWrapper>
+                <ActionButtonWrapper>
+                  <Button color="danger" onClick={() => handleDeleteModal(item)}><FaTrash /></Button>
+                  <Button color="primary" onClick={() => handleOpenEditModal(item)}><FaEdit /></Button>
+                </ActionButtonWrapper>
+                <Image src={NoImage} onClick={() => handleNavigate(item.id)} />
+              </RelativeWrapper>)}
+          </CardWrapper>;
+        })}
+      </Grid>
+      {isOpen ? (
+        <Modal isOpen={isOpen} onClose={handleCloseModal}>
+          {isEdit ? (
+            <form onSubmit={handleSubmitEdit}>
+              <ModalWrapper>
+                <Subtitle>Edit Collection Name</Subtitle>
+                <InputPage value={editForm} placeholder="Collection Name" pattern="[A-Za-z\s]+" onChange={handleChangeEdit} />
+                {isError && <ErrorMessage>Please enter a unique collection name.</ErrorMessage>}
                 <FlexWrapper>
-                    <Button color="secondary" variant="text" onClick={handleOpenCreateCollectionModal}>Add new collection</Button>
+                  <Button onClick={handleCloseModal} color="primary">Cancel</Button>
+                  <Button disabled={!editForm || isError} color="primary">Save</Button>
                 </FlexWrapper>
-            </FlexWrapper>
-            <Grid
-                layout
-                animate={{ opacity: 1 }}
-                initial={{ opacity: 0 }}
-                transition={{ ease: "easeOut", duration: 1 }}>
-                {tempCollection.map((item: ICollection) => {
-                    return <CardWrapper key={item.id}>
-                        {item.collection_name}
-                        {item.anime_list?.length! > 0 ? (
-                            <Card key={item.id} animateHover={false} deleteAction editAction handleDelete={() => handleDeleteModal(item)} handleEdit={() => handleOpenEditModal(item)} handleClick={() => handleNavigate(item.id)} {...item.anime_list?.[0]} />
-                        ) : (
-                            <RelativeWrapper>
-                                <ActionButtonWrapper>
-                                    <Button color="danger" onClick={() => handleDeleteModal(item)}><FaTrash /></Button>
-                                    <Button color="primary" onClick={() => handleOpenEditModal(item)}><FaEdit /></Button>
-                                </ActionButtonWrapper>
-                                <Image src={NoImage} onClick={() => handleNavigate(item.id)} />
-                            </RelativeWrapper>)}
-                    </CardWrapper>;
-                })}
-            </Grid>
-            {isOpen ? (
-                <Modal isOpen={isOpen} onClose={handleCloseModal}>
-                    {isEdit ? (
-                        <form onSubmit={handleSubmitEdit}>
-                            <ModalWrapper>
-                                <Subtitle>Edit Collection Name</Subtitle>
-                                <InputPage value={editForm} placeholder="Collection Name" pattern="[A-Za-z\s]+" onChange={handleChangeEdit} />
-                                {isError && <ErrorMessage>Please enter a unique collection name.</ErrorMessage>}
-                                <Button disabled={!editForm || isError} color="primary">Save</Button>
-                            </ModalWrapper>
-                        </form>
-                    ) : isCreate ? (
-                        <form onSubmit={handleSubmitCreate}>
-                            <ModalWrapper>
-                                <Subtitle>Add New Collection</Subtitle>
-                                <InputPage value={editForm} placeholder="Collection Name" pattern="[A-Za-z\s]+" onChange={handleChangeEdit} />
-                                {isError && <ErrorMessage>Please enter a unique collection name.</ErrorMessage>}
-                                <Button disabled={!editForm || isError} color="primary">Save</Button>
-                            </ModalWrapper>
-                        </form>
-                    ) : (
-                        <ModalWrapper>
-                            <Subtitle>Delete {deleteModalData?.collection_name} ?</Subtitle>
-                            <FlexWrapper>
-                                <Button onClick={handleCloseModal} color="black">Cancel</Button>
-                                <Button color="danger" onClick={() => handleDeleteCollection(deleteModalData?.id!)}>Delete</Button>
-                            </FlexWrapper>
-                        </ModalWrapper>
-                    )}
-                </Modal>
-            ) : null}
-        </CollectionListWrapper>
-    )
+              </ModalWrapper>
+            </form>
+          ) : isCreate ? (
+            <form onSubmit={handleSubmitCreate}>
+              <ModalWrapper>
+                <Subtitle>Add New Collection</Subtitle>
+                <InputPage value={editForm} placeholder="Collection Name" pattern="[A-Za-z\s]+" onChange={handleChangeEdit} />
+                {isError && <ErrorMessage>Please enter a unique collection name.</ErrorMessage>}
+                <Button disabled={!editForm || isError} color="primary">Save</Button>
+              </ModalWrapper>
+            </form>
+          ) : (
+            <ModalWrapper>
+              <Subtitle>Are you sure you want to delete "{deleteModalData?.collection_name}"?</Subtitle>
+              <FlexWrapper>
+                <Button onClick={handleCloseModal} color="primary">Cancel</Button>
+                <Button color="danger" onClick={() => handleDeleteCollection(deleteModalData!.id)}>Delete</Button>
+              </FlexWrapper>
+            </ModalWrapper>
+          )}
+        </Modal>
+      ) : null}
+    </CollectionListWrapper>
+  )
 }
 
 export default CollectionList

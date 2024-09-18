@@ -3,6 +3,7 @@ import { Card, Dashed, Grid, Loader, Pagination } from "../../components";
 import { fetchAnimeList } from "../../services/anime";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import { Media } from "../../interfaces";
 
 const HomeWrapper = styled.div`
   width: 100%;
@@ -63,12 +64,8 @@ const Home: React.FC = () => {
       <FlexWrapper>
         <Title>Here's are some anime list</Title>
       </FlexWrapper>
-      <Grid
-        layout
-        animate={{ opacity: 1 }}
-        initial={{ opacity: 0 }}
-        transition={{ ease: "easeOut", duration: 2 }}>
-        {data?.Page?.media?.map((item: any) => {
+      <Grid>
+        {data?.Page?.media?.map((item) => {
           return <Card key={item.id} handleClick={() => handleNavigate(item?.id)} {...item} />;
         })}
       </Grid>

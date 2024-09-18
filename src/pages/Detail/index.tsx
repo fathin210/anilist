@@ -57,19 +57,18 @@ const Subtitle = styled.h1`
 const GenresWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  gap: 8px;
 `
 
 
 const GenresChip = styled.span`
-  padding: 5px;
-  font-size: 12px;
+  padding: 8px;
+  font-size: 10px;
   font-weight: bold;
   background: ${(props) => props.theme.colors.accent};
   border-radius: 10px;
   @media (min-width: 768px) {
-    font-size: 16px;
+    font-size: 12px;
   }
 `
 
@@ -295,7 +294,7 @@ const Detail: React.FC = () => {
                     <form onSubmit={handleSubmit}>
                         <ModalWrapper>
                             <ModalLabel>You can add a new collection name</ModalLabel>
-                            <Input type="text" name="collection_name" pattern="[A-Za-z\s]+" onChange={handleChange} />
+                            <Input autoComplete="off" type="text" name="collection_name" pattern="[A-Za-z\s]+" onChange={handleChange} />
                             {isError && <ErrorMessage>Please enter a unique collection name.</ErrorMessage>}
                             <ModalLabel>Or select from existing collection</ModalLabel>
                             <MultiAutocomplete collectionsWithAnime={collectionsWithAnime} existingCollection={existingCollection} handleAddToExisting={handleAddToExisting} handleRemove={handleRemove} />
